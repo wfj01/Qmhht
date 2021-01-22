@@ -1,0 +1,71 @@
+<template>
+  <div>
+    <div id="app" v-if="islogin === 'true'">
+      <el-menu
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+        :default-active="activeIndex"
+        router
+        style="width: 20%"
+        class="aa"
+      >
+        <NavMenu :navMenus="menuData"></NavMenu>
+      </el-menu>
+      <router-view id="routerview" />
+    </div>
+    <LoginPage v-if="islogin !== 'true'"></LoginPage>
+  </div>
+</template>
+
+<script>
+import LoginPage from "./components/login/login";
+import NavMenu from "./components/NavMenu.vue";
+import menulist from "./utils/menuList";
+export default {
+  name: "App",
+  components: {
+    NavMenu: NavMenu,
+    LoginPage: LoginPage,
+    activeIndex: 0,
+  },
+  data() {
+    return {
+      activeIndex: "TablePage",
+      menuData: menulist,
+      islogin: "",
+    };
+  },
+  mounted() {
+    this.$router.push("/");
+    this.islogin = localStorage.getItem("islogin");
+    console.log("this.islogin", this.islogin);
+  },
+};
+</script>
+
+<style>
+@import "./public/iconfont.css";
+#app {
+  display: flex;
+  justify-content: flex-start;
+  border: 1px solid #cccccc;
+}
+#routerview {
+  width: 80%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+}
+.aa {
+  height: 604px;
+  overflow-y: overlay;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.aa::-webkit-scrollbar {
+  display: none; /* Chrome Safari */
+}
+</style>
